@@ -1,0 +1,6 @@
+.vscode/tasks.json
+.vscode/c_cpp_properties.json
+.vscode/launch.json
+tictactoe
+.vscode/settings.json
+tictactoe.dSYM/Contents/Info.plist

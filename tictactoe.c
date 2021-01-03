@@ -25,7 +25,7 @@ int main() {
         checkWinner = winnerFound(grid);
         if ( checkWinner ) {
             drawGrid(grid);
-            printf("Congratulations player %i. You have won!\n", checkWinner);
+            printf("Congratulations player %i. You have won!\n\n", checkWinner);
             break;
         }
         validMoveCount++;
@@ -33,6 +33,10 @@ int main() {
             playerTurn = 2;
         else
             playerTurn = 1;
+    }
+
+    if ( !checkWinner ) {
+        printf("\nThe game was a draw.\n\n");
     }
 
     return 0;
@@ -93,7 +97,7 @@ capture player's move
 int captureMove(int player) {
     int playerMove;
 
-    printf("\nPlayer %i - where do you wish to play? Please type a number from 1-9: ",player);
+    printf("\nPlayer %i - where do you wish to go? Please type a number from 1-9: ",player);
     scanf("%i", &playerMove);
 
     return playerMove;
@@ -137,19 +141,34 @@ void updateGrid(int grid[], int playerTurn, int playerMove) {
 /*
 determine if a player has won
 return the player id (1 or 2)
+// winning combinations:
+// 1,2,3
+// 4,5,6
+// 7,8,9
+// 1,4,7
+// 2,5,8
+// 3,6,9
+// 1,5,9
+// 3,5,7
 */
 int winnerFound(int grid[]) {
+    int winner = 0;
     if ( grid[1] == grid[2] && grid[2] == grid[3] ) {
-        return grid[1];
+        winner = grid[1];
+    } else if ( grid[4] == grid[5] && grid[5] == grid[6] ) {
+        winner = grid[4];
+    } else if ( grid[7] == grid[8] && grid[8] == grid[9] ) {
+        winner = grid[7];
+    } else if ( grid[1] == grid[4] && grid[4] == grid[7] ) {
+        winner = grid[1];
+    } else if ( grid[2] == grid[5] && grid[5] == grid[8] ) {
+        winner = grid[2];
+    } else if ( grid[3] == grid[6] && grid[6] == grid[9] ) {
+        winner = grid[3];
+    } else if ( grid[1] == grid[5] && grid[5] == grid[9] ) {
+        winner = grid[1];
+    } else if ( grid[3] == grid[5] && grid[5] == grid[7] ) {
+        winner = grid[3];
     }
-
-    // 1,2,3
-    // 4,5,6
-    // 7,8,9
-    // 1,4,7
-    // 2,5,8
-    // 3,6,9
-    // 1,5,9
-    // 3,5,7
-    return 0;
+    return winner;
 }

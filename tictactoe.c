@@ -1,13 +1,20 @@
+/*
+Author: A Bleach
+Date: 03/01/2021
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 
-void drawGrid(void);
+void clearScreen(void);
+void drawGrid(int grid[]);
 void makeMove(int player, int position);
 bool validateMove(void);
 int checkForWin(void);
 
 int main() {
+    int grid[10] = {0};
+    drawGrid(grid);
     return 0;
 }
 
@@ -17,7 +24,20 @@ draw the grid
 2. header showing which player is which symbol
 3. draw the grid
 */
-void drawGrid(void) {
+void drawGrid(int grid[]) {
+    clearScreen();
+    printf("Welcome to Tic Tac Toe!\n");
+    printf("-----------------------\n\n");
+    printf("Player 1: X\tPlayer 2: O\n\n");
+}
+
+/* 
+clear screen 
+couldn't get system("clear") et al to work
+using ascci chars in place
+*/
+void clearScreen() {
+    printf("\033[2J\033[H");
 }
 
 /*

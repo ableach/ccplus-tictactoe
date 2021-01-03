@@ -85,7 +85,7 @@ void drawGrid(int grid[]) {
 /* 
 clear screen 
 couldn't get system("clear") et al to work
-using ascci chars in place
+using ANSI chars in place
 */
 void clearScreen() {
     printf("\033[2J\033[H");

@@ -29,6 +29,22 @@ void drawGrid(int grid[]) {
     printf("Welcome to Tic Tac Toe!\n");
     printf("-----------------------\n\n");
     printf("Player 1: X\tPlayer 2: O\n\n");
+
+    printf("--|---|--\n");
+    for ( int i=1; i<10; i++ ) {
+        if (grid[i] == 0) {
+            printf("%i",i);    
+        } else {
+            ( grid[i] == 1 ) ? printf("X") : printf("O");
+        }
+        if ( i % 3 == 0 ) {
+            printf("\n");
+            printf("--|---|--\n");
+        } else {
+            printf(" | ");
+        }
+    }
+    printf("\n");
 }
 
 /* 

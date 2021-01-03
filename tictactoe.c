@@ -29,10 +29,7 @@ int main() {
             break;
         }
         validMoveCount++;
-        if ( playerTurn == 1 )
-            playerTurn = 2;
-        else
-            playerTurn = 1;
+        playerTurn = ( playerTurn == 1 ) ? 2 : 1;
     }
 
     if ( !checkWinner ) {

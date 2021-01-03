@@ -6,23 +6,29 @@ Date: 03/01/2021
 #include <stdlib.h>
 #include <stdbool.h>
 
+void takeTurn(int grid[], int playerTurn, int playerMove);
 void clearScreen(void);
 void drawGrid(int grid[]);
 int captureMove(int player);
-bool validMove(int playerMove);
+bool validMove(int grid[], int playerMove);
 void updateGrid(int grid[], int playerTurn, int playerMove);
-int winnerFound(void);
+int winnerFound(int grid[]);
+bool validInputRange(int playerMove);
+bool vacantSquare(int grid[], int playerMove);
 
 int main() {
     int grid[10] = {0};
-    int playerTurn = 1, playerMove = 0;
-    bool validity;
-    for ( int i=1; i<10; i++ ) {
-        drawGrid(grid);
-        do {
-            playerMove = captureMove(playerTurn);
-        } while ( validMove(playerMove) == false );
-        updateGrid(grid,playerTurn,playerMove);
+    int playerTurn = 1, playerMove = 0, validMoveCount = 1, checkWinner = 0;
+
+    while ( validMoveCount < 10 ) {
+        takeTurn(grid, playerTurn, playerMove);
+        checkWinner = winnerFound(grid);
+        if ( checkWinner ) {
+            drawGrid(grid);
+            printf("Congratulations player %i. You have won!\n", checkWinner);
+            break;
+        }
+        validMoveCount++;
         if ( playerTurn == 1 )
             playerTurn = 2;
         else
@@ -30,6 +36,17 @@ int main() {
     }
 
     return 0;
+}
+
+void takeTurn(int grid[], int playerTurn, int playerMove)
+{
+    drawGrid(grid);
+    do {
+        playerMove = captureMove(playerTurn);
+    } while ( validMove(grid, playerMove) == false );
+
+    updateGrid(grid, playerTurn, playerMove);
+
 }
 
 /*
@@ -76,7 +93,7 @@ capture player's move
 int captureMove(int player) {
     int playerMove;
 
-    printf("\nPlayer %i - please choose where to play next: ",player);
+    printf("\nPlayer %i - where do you wish to play? Please type a number from 1-9: ",player);
     scanf("%i", &playerMove);
 
     return playerMove;
@@ -87,13 +104,31 @@ check that a move is valid
 1. is position valid (i.e. between 1 and 9)
 2. is position available
 */
-bool validMove(int playerMove) {
+bool validMove(int grid[], int playerMove) {
+    bool validity = false;
+    if (validInputRange(playerMove) && vacantSquare(grid, playerMove)) {
+        validity = true;
+    }
+    return validity;
+}
+
+bool validInputRange(int playerMove) {
     bool validity = false;
     if (playerMove >= 1 && playerMove <= 9) {
         validity = true;
     }
     return validity;
 }
+
+bool vacantSquare(int grid[], int playerMove) {
+    bool validity = false;
+    if (grid[playerMove] == 0) {
+        validity = true;
+    }
+    return validity;
+}
+
+
 
 void updateGrid(int grid[], int playerTurn, int playerMove) {
     grid[playerMove] = playerTurn;
@@ -103,6 +138,18 @@ void updateGrid(int grid[], int playerTurn, int playerMove) {
 determine if a player has won
 return the player id (1 or 2)
 */
-int winnerFound(void) {
+int winnerFound(int grid[]) {
+    if ( grid[1] == grid[2] && grid[2] == grid[3] ) {
+        return grid[1];
+    }
+
+    // 1,2,3
+    // 4,5,6
+    // 7,8,9
+    // 1,4,7
+    // 2,5,8
+    // 3,6,9
+    // 1,5,9
+    // 3,5,7
     return 0;
 }

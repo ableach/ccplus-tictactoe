@@ -13,8 +13,6 @@ int captureMove(int player);
 bool validMove(int grid[], int playerMove);
 void updateGrid(int grid[], int playerTurn, int playerMove);
 int winnerFound(int grid[]);
-bool validInputRange(int playerMove);
-bool vacantSquare(int grid[], int playerMove);
 
 int main() {
     int grid[10] = {0};
@@ -107,29 +105,11 @@ check that a move is valid
 */
 bool validMove(int grid[], int playerMove) {
     bool validity = false;
-    if (validInputRange(playerMove) && vacantSquare(grid, playerMove)) {
+    if (playerMove >= 1 && playerMove <= 9 && grid[playerMove] == 0) {
         validity = true;
     }
     return validity;
 }
-
-bool validInputRange(int playerMove) {
-    bool validity = false;
-    if (playerMove >= 1 && playerMove <= 9) {
-        validity = true;
-    }
-    return validity;
-}
-
-bool vacantSquare(int grid[], int playerMove) {
-    bool validity = false;
-    if (grid[playerMove] == 0) {
-        validity = true;
-    }
-    return validity;
-}
-
-
 
 void updateGrid(int grid[], int playerTurn, int playerMove) {
     grid[playerMove] = playerTurn;
